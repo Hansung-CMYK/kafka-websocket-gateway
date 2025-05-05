@@ -16,6 +16,10 @@ public class KafkaStompBridge {
 
 	@KafkaListener(topics = "chat-responses", groupId = "gateway-group")
 	public void listen(ChatMessage msg) {
-		messagingTemplate.convertAndSend("/topic/messages/" + msg.getTo(), msg);
+		messagingTemplate.convertAndSendToUser(
+			msg.getTo(),
+			"/queue/messages",
+			msg
+		);
 	}
 }

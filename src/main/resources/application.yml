@@ -1,7 +1,4 @@
 spring:
-  application:
-    name: kafka-websocket-gateway
-
   kafka:
     bootstrap-servers: localhost:9092
     producer:
@@ -9,10 +6,11 @@ spring:
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
     consumer:
       group-id: gateway-group
+      auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
         spring.json.trusted.packages: '*'
-
+        spring.json.value.default.type: com.ego.websocketgateway.dto.ChatMessage
 server:
   port: 8000

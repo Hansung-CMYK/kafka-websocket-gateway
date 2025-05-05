@@ -1,5 +1,7 @@
 package ego.websocketgateway.controller;
 
+import java.security.Principal;
+
 import ego.websocketgateway.dto.ChatMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -19,7 +21,8 @@ public class ChatController {
 
 	// 클라이언트 -> 서버 : /app/chat.send
 	@MessageMapping("/chat.send")
-	public void sendMessage(@Payload ChatMessage msg) {
-		kafkaTemplate.send("chat-requests", msg);
+	public void sendMessage(@Payload ChatMessage msg, Principal principal) {
+		msg.setFrom(principal.getName());
+		kafkaTemplate.send("chat-requests", msg.getFrom(), msg);
 	}
 }
