@@ -21,8 +21,7 @@ public class ChatController {
 
 	// 클라이언트 -> 서버 : /app/chat.send
 	@MessageMapping("/chat.send")
-	public void sendMessage(@Payload ChatMessage msg, Principal principal) {
-		msg.setFrom(principal.getName());
+	public void sendMessage(@Payload ChatMessage msg) {
 		kafkaTemplate.send("chat-requests", msg.getFrom(), msg);
 	}
 }
