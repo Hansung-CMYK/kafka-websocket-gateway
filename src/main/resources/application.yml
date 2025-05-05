@@ -10,7 +10,7 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
-        spring.json.trusted.packages: '*'
-        spring.json.value.default.type: com.ego.websocketgateway.dto.ChatMessage
+        spring.json.trusted.packages: "ego.websocketgateway.dto"
+        spring.json.value.default.type: "ego.websocketgateway.dto.ChatMessage"
 server:
   port: 8000
