@@ -1,6 +1,7 @@
 package ego.websocketgateway.dto;
 
 import java.time.Instant;
+import java.util.UUID;
 
 import lombok.*;
 
@@ -9,26 +10,34 @@ import lombok.*;
 @Getter
 @Setter
 public class ChatMessage {
-
+	private int chatRoomId;
 	private String from;
-	private String to;
 	private String content;
 	private MessageType type;
+	private String hash;
+
+	@Builder.Default
+	private Instant chat_at = Instant.now();
+	@Builder.Default
+	private boolean isDeleted = false;
+
+	private String to;
 
 	@Setter(AccessLevel.NONE)
 	private boolean mcpEnabled;
 
-	@Builder.Default
-	private Instant timestamp = Instant.now();
-
 	@Builder
-	public ChatMessage(String from, String to, String content, MessageType type, boolean mcpEnabled, Instant timestamp) {
+	public ChatMessage(int chatRoomId, String from, String content, MessageType type, String hash, Instant chat_at, boolean isDeleted, String to, boolean mcpEnabled) {
+		this.chatRoomId = chatRoomId;
 		this.from = from;
-		this.to = to;
 		this.content = content;
 		this.type = type;
+		this.hash = hash;
+		this.chat_at = chat_at;
+		this.isDeleted = false;
+		this.to = to;
 		this.mcpEnabled = type == MessageType.TEXT && mcpEnabled; // 텍스트일 때만 유효
-		this.timestamp = timestamp != null ? timestamp : Instant.now();
+		this.chat_at = chat_at != null ? chat_at : Instant.now();
 	}
 
 	public enum MessageType {
