@@ -1,4 +1,3 @@
-// WebSocketConfig.java
 package ego.websocketgateway.config;
 
 import org.springframework.context.annotation.Bean;
@@ -35,9 +34,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws")
-                .setAllowedOriginPatterns("*")
-                .withSockJS()
-                .setHeartbeatTime(10_000);
+                .setAllowedOriginPatterns("*");
     }
 }
 
