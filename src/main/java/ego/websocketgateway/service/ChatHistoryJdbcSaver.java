@@ -5,17 +5,20 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.Timestamp;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ChatHistoryJdbcSaver {
+
+	private static final Logger log = LoggerFactory.getLogger(ChatHistoryJdbcSaver.class);
+
 	@Value("${app.postgres.url}")
 	private static String url;
-
 	@Value("${app.postgres.user}")
 	private static String user;
-
 	@Value("${app.postgres.password}")
 	private static String password;
 
@@ -43,7 +46,7 @@ public class ChatHistoryJdbcSaver {
 
 			stmt.executeUpdate();
 		} catch (Exception e) {
-			e.printStackTrace(); // log.error 로 바꿀 수 있음
+			log.error("DB 저장 실패 (uid: {}, chatRoomId: {}): {}", uid, chatRoomId, e.getMessage(), e);
 		}
 	}
 }
