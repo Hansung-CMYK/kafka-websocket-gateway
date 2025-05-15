@@ -2,6 +2,8 @@ package ego.websocketgateway.dto;
 
 import java.time.Instant;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.*;
 
 @Builder
@@ -12,6 +14,8 @@ public class ChatMessage {
 	private int chatRoomId;
 	private String from;
 	private String content;
+
+	@JsonFormat(shape = JsonFormat.Shape.STRING)
 	private MessageType type;
 	private String hash;
 
