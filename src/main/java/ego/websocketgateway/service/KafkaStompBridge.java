@@ -25,6 +25,7 @@ public class KafkaStompBridge {
 			msg.getTo(),
 			msg.getChatRoomId(),
 			msg.getContent(),
+			msg.getMessageType(),
 			"E",
 			msg.getChatAt(),
 			msg.getHash(),

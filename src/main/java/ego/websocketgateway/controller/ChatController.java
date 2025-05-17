@@ -29,6 +29,7 @@ public class ChatController {
 			msg.getFrom(),
 			msg.getChatRoomId(),
 			msg.getContent(),
+			msg.getMessageType(),
 			"U",
 			msg.getChatAt(),
 			msg.getHash(),
