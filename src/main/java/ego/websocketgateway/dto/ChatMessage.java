@@ -2,7 +2,6 @@ package ego.websocketgateway.dto;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
-import java.time.Instant;
 import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -24,6 +23,7 @@ public class ChatMessage {
 
 	@Builder.Default
 	private LocalDateTime chatAt = LocalDateTime.now();
+
 	@Builder.Default
 	private boolean isDeleted = false;
 
