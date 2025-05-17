@@ -3,6 +3,7 @@ package ego.websocketgateway.controller;
 import java.security.Principal;
 
 import ego.websocketgateway.dto.ChatMessage;
+import ego.websocketgateway.service.ChatHistoryJdbcSaver;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -23,5 +24,16 @@ public class ChatController {
 	@MessageMapping("/chat.send")
 	public void sendMessage(@Payload ChatMessage msg) {
 		kafkaTemplate.send("chat-requests", msg.getFrom(), msg);
+
+		ChatHistoryJdbcSaver.save(
+			msg.getFrom(),
+			msg.getChatRoomId(),
+			msg.getContent(),
+			msg.getMessageType(),
+			"U",
+			msg.getChatAt(),
+			msg.getHash(),
+			msg.isDeleted()
+		);
 	}
 }

@@ -20,5 +20,16 @@ public class KafkaStompBridge {
 			"/topic/messages/" + msg.getTo(),
 			msg
 		);
+
+		ChatHistoryJdbcSaver.save(
+			msg.getTo(),
+			msg.getChatRoomId(),
+			msg.getContent(),
+			msg.getMessageType(),
+			"E",
+			msg.getChatAt(),
+			msg.getHash(),
+			msg.isDeleted()
+		);
 	}
 }
