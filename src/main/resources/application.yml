@@ -14,10 +14,13 @@ spring:
         spring.json.trusted.packages: "ego.websocketgateway.dto"
         spring.json.value.default.type: "ego.websocketgateway.dto.ChatMessage"
 
-  postgresql:
-    url: ${POSTGRES_URL}
-    user: ${POSTGRES_USER}
-    password: ${POSTGRES_PASSWORD}
+  datasource:
+    url:               ${POSTGRES_URL}
+    username:          ${POSTGRES_USER}
+    password:          ${POSTGRES_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+
 
 server:
   port: 8000
