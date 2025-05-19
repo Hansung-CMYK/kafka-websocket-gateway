@@ -20,7 +20,15 @@ spring:
     password:          ${POSTGRES_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
-
+  cloud:
+    aws:
+      credentials:
+        access-key: ${ACCESS_KEY}
+        secret-key: ${SECRET_KEY}
+      region:
+        static: ${REGION}
+      s3:
+        bucket: ${BUCKET_NAME}
 
 server:
   port: 8000
