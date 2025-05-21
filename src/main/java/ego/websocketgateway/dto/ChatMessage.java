@@ -18,8 +18,8 @@ public class ChatMessage {
 	private String content;
 
 	@JsonFormat(shape = JsonFormat.Shape.STRING)
-	private MessageType messageType;
-	private String hash;
+	private MessageType contentType;
+	private String messageHash;
 
 	@Builder.Default
 	private LocalDateTime chatAt = LocalDateTime.now();
@@ -33,16 +33,16 @@ public class ChatMessage {
 	private boolean mcpEnabled;
 
 	@Builder
-	public ChatMessage(int chatRoomId, String from, String content, MessageType messageType, String hash, LocalDateTime chatAt, boolean isDeleted, String to, boolean mcpEnabled) {
+	public ChatMessage(int chatRoomId, String from, String content, MessageType contentType, String messageHash, LocalDateTime chatAt, boolean isDeleted, String to, boolean mcpEnabled) {
 		this.chatRoomId = chatRoomId;
 		this.from = from;
 		this.content = content;
-		this.messageType = messageType;
+		this.contentType = contentType;
 		this.isDeleted = false;
 		this.to = to;
-		this.mcpEnabled = messageType == MessageType.TEXT && mcpEnabled; // 텍스트일 때만 유효
+		this.mcpEnabled = contentType == MessageType.TEXT && mcpEnabled; // 텍스트일 때만 유효
 		this.chatAt = chatAt != null ? chatAt : LocalDateTime.now();
-		this.hash = hash == null ? generateHash(from, chatAt, content) : hash;
+		this.messageHash = messageHash == null ? generateHash(from, chatAt, content) : messageHash;
 	}
 
 	public enum MessageType {

@@ -22,7 +22,7 @@ public class ChatController {
 		kafka.send("chat-requests", msg.getFrom(), msg);
 
 		try {
-			if(msg.getMessageType() == ChatMessage.MessageType.IMAGE) {
+			if(msg.getContentType() == ChatMessage.MessageType.IMAGE) {
 				String imageUrl = s3Service.uploadBase64Image(msg.getContent());
 				msg.setContent(imageUrl);
 			}
@@ -30,6 +30,6 @@ public class ChatController {
 			e.printStackTrace();
 			return;
 		}
-		saver.save(msg, "user");
+		saver.save(msg, "u");
 	}
 }
