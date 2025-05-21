@@ -18,6 +18,6 @@ public class KafkaStompBridge {
 	public void listen(ChatMessage msg) {
 		ws.convertAndSend("/topic/messages/" + msg.getTo(), msg);
 
-		saver.save(msg, "ego");
+		saver.save(msg, "e");
 	}
 }
