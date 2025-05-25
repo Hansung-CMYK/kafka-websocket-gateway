@@ -20,6 +20,11 @@ public class ChatHistoryJdbcSaver {
 
 	public void save(ChatMessage msg, String type) {
 		String uid = "u".equals(type) ? msg.getFrom() : msg.getTo();
+
+		if(msg.getMessageHash() == null || msg.getMessageHash().isEmpty()){
+			msg.setMessageHash(ChatMessage.generateHash(uid, msg.getChatAt(), msg.getContent()));
+		}
+
 		String sql = String.format(
 			"INSERT INTO \"%s\".\"chat_history\" " +
 				"(uid, chat_room_id, content, type, content_type, chat_at, is_deleted, message_hash) " +
@@ -28,7 +33,7 @@ public class ChatHistoryJdbcSaver {
 		);
 
 		tenantJdbc.update(sql,
-			msg.getFrom(),
+			uid,
 			msg.getChatRoomId(),
 			msg.getContent(),
 			type.equals("u") ? "u" : "e",
