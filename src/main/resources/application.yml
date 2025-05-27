@@ -1,9 +1,17 @@
 spring:
   kafka:
     bootstrap-servers: localhost:9092
+
+    # ① 프로듀서 ------------------------------
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+      # 1 MiB → 2 MiB(= 2 048 000) 또는 그 이상
+      properties:
+        max.request.size: 2097152         # ← 프로듀서가 브로커에 보낼 수 있는 최대 메시지
+
+    # ② 컨슈머 -------------------------------
     consumer:
       group-id: gateway-group
       auto-offset-reset: earliest
@@ -13,6 +21,13 @@ spring:
         spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
         spring.json.trusted.packages: "ego.websocketgateway.dto"
         spring.json.value.default.type: "ego.websocketgateway.dto.ChatMessage"
+
+        # 1 MiB → 2 MiB(= 2 048 000) 또는 그 이상
+        max.partition.fetch.bytes: 2097152   # ← 컨슈머가 한 번에 가져올 수 있는 최대 레코드 크기
+
+    # ③ 브로커 전체(Producer·Consumer 공통) -----
+    properties:                              # spring.kafka.properties.* 는 클라이언트가 브로커로 넘겨줄 설정
+      max.message.bytes: 2097152             # ← 브로커가 허용하는 최대 메시지 크기
 
   datasource:
     url:               ${POSTGRES_URL}
