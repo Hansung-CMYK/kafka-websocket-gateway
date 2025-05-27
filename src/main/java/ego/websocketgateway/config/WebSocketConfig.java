@@ -8,6 +8,7 @@ import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBr
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketTransportRegistration;
+import org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean;
 
 @Configuration
 @EnableWebSocketMessageBroker
@@ -44,6 +45,15 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         reg.setMessageSizeLimit(twoMb)        // inbound STOMP frame
             .setSendBufferSizeLimit(twoMb)     // outbound STOMP frame
             .setSendTimeLimit(20_000);         // 20 s
+    }
+
+    @Bean
+    public ServletServerContainerFactoryBean createWebSocketContainer() {
+        int twoMb = 2 * 1024 * 1024;   // 2 MB
+        ServletServerContainerFactoryBean container = new ServletServerContainerFactoryBean();
+        container.setMaxTextMessageBufferSize(twoMb);
+        container.setMaxBinaryMessageBufferSize(twoMb);
+        return container;
     }
 }
 
