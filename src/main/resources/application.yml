@@ -7,14 +7,14 @@ spring:
   kafka:
     bootstrap-servers: localhost:9092
 
+
     # ① 프로듀서 ------------------------------
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
-      # 1 MiB → 2 MiB(= 2 048 000) 또는 그 이상
       properties:
-        max.request.size: 2097152         # ← 프로듀서가 브로커에 보낼 수 있는 최대 메시지
+        max.request.size: 2097152
 
     # ② 컨슈머 -------------------------------
     consumer:

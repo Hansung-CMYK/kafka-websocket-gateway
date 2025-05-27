@@ -10,8 +10,11 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 import org.springframework.web.socket.config.annotation.WebSocketTransportRegistration;
 import org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Configuration
 @EnableWebSocketMessageBroker
+@Slf4j
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Bean
@@ -53,6 +56,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         ServletServerContainerFactoryBean container = new ServletServerContainerFactoryBean();
         container.setMaxTextMessageBufferSize(twoMb);
         container.setMaxBinaryMessageBufferSize(twoMb);
+
+        log.info("Tomcat WS buffer = {} bytes", twoMb);
         return container;
     }
 }
