@@ -1,4 +1,9 @@
 spring:
+
+  websocket:
+    message-size-limit: 2MB
+    max-text-message-size: 2MB
+    max-binary-message-size: 2MB
   kafka:
     bootstrap-servers: localhost:9092
 
